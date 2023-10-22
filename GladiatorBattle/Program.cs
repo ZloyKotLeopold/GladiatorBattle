@@ -69,6 +69,7 @@ namespace GladiatorBattle
         public void GiveDamage(double damage)
         {
             Health -= damage;
+
             Console.WriteLine($"{Name} получает {damage} урона и осталось {Health} здоровья.");
         }
 
