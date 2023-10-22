@@ -20,6 +20,7 @@ namespace GladiatorBattle
     public interface IFighter : IDamageble, IIsAlive
     {
         string Name { get; }
+
         void Attack(IFighter fighter);
     }
 
