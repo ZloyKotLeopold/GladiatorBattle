@@ -1,4 +1,6 @@
 ﻿using System;
+using static System.Net.Mime.MediaTypeNames;
+using System.Xml.Linq;
 
 namespace GladiatorBattle
 {
@@ -6,37 +8,32 @@ namespace GladiatorBattle
     {
         static void Main()
         {
-            RoundModeling roundModeling = new RoundModeling();
+            Arena roundModeling = new Arena();
 
-            IFighter ahiles = new Berserker("Ахилес", 80, 18);
-            IFighter thor = new Berserker("Тор", 60, 15);
-            IFighter goliath = new Goliath("Голиаф", 150, 10);
-            IFighter david = new Goliath("Давид", 100, 13);
+            Berserker berserk = new Berserker("Берсерк", 1500, 250, 40, 50);
+            Goliath goliath = new Goliath("Голиаф", 1500, 250, 40, 50);
+            Athlant athlant = new Athlant("Атлант", 1500, 250, 40, 50);
+            Legionary legionary = new Legionary("Легионер", 1500, 250, 40, 50);
+            Hoplite hoplite = new Hoplite("Гоплит", 1500, 250, 40, 50);
 
-            roundModeling.Modeling(ahiles, goliath);
+            roundModeling.Fight(berserk, goliath);
         }
     }
 
-    public interface IFighter : IDamageble, IIsAlive
+    public interface IFighter
     {
         string Name { get; }
 
         void Attack(IFighter fighter);
-    }
 
-    public interface IDamageble
-    {
-        void GiveDamage(double damage);
-    }
+        void TakeDamage();
 
-    public interface IIsAlive
-    {
         bool IsAlive();
     }
 
-    public class RoundModeling
+    public class Arena
     {
-        public void Modeling(IFighter fighter1, IFighter fighter2)
+        public void Fight(IFighter fighter1, IFighter fighter2)
         {
             while (fighter1.IsAlive() && fighter2.IsAlive())
             {
@@ -61,17 +58,37 @@ namespace GladiatorBattle
         }
     }
 
-    public class Fighter
+    public class Fighter : IFighter
     {
         protected string Name { get; set; }
         protected double Health { get; set; }
         protected double Damage { get; set; }
+        protected double Armor { get; set; }
+        protected double Regeneration { get; set; }
 
-        public void GiveDamage(double damage)
+        string IFighter.Name => Name;
+
+        public void TakeDamage()
         {
-            Health -= damage;
+            double finalDamage = Damage * (1 - Armor / (Armor + Health));
 
-            Console.WriteLine($"{Name} получает {damage} урона и осталось {Health} здоровья.");
+            Health -= finalDamage;
+
+            Console.WriteLine($"{Name} получает {finalDamage} урона и у него осталось {Health} здоровья.");
+        }
+
+        public void RegenirationHealth()
+        {
+            Health += Regeneration;
+        }
+
+        public void Attack(IFighter fighter)
+        {
+            RegenirationHealth();
+
+            Console.WriteLine($"{Name} восстанавливает {Regeneration} здоровья и атакует {fighter.Name} нанося {Damage} урона.\n");
+
+            fighter.TakeDamage();
         }
 
         public bool IsAlive()
@@ -80,52 +97,78 @@ namespace GladiatorBattle
         }
     }
 
-    public class Berserker : Fighter, IFighter
+    public class Berserker : Fighter
     {
         const double CoefficientDamageIncrease = 1.6;
         const double CoefficientHealthDecrease = 0.7;
 
-        public Berserker(string name, int health, int damage)
+        public Berserker(string name, int health, int damage, int armor, int regeneration)
         {
             Name = name;
             Health = health * CoefficientHealthDecrease;
-            Damage = damage;
-        }
-
-        string IFighter.Name => Name;
-
-        public void Attack(IFighter fighter)
-        {
-            int berserkerDamage = (int)(Damage * CoefficientDamageIncrease);
-
-            Console.WriteLine($"{Name} атакует {fighter.Name} и наносит {berserkerDamage} урона.");
-
-            fighter.GiveDamage(berserkerDamage);
+            Damage = damage * CoefficientDamageIncrease;
+            Armor = armor;
+            Regeneration = regeneration;
         }
     }
 
-    public class Goliath : Fighter, IFighter
+    public class Goliath : Fighter
     {
         const double CoefficientArmorIncrease = 1.6;
         const double CoefficientDamageDecrease = 0.6;
         const double CoefficientHealthIncrease = 1.3;
 
-        public Goliath(string name, int health, int damage)
+        public Goliath(string name, int health, int damage, int armor, int regeneration)
         {
             Name = name;
             Damage = damage * CoefficientDamageDecrease;
             Health = health * CoefficientHealthIncrease;
+            Armor = armor * CoefficientArmorIncrease;
+            Regeneration = regeneration;
         }
+    }
 
-        string IFighter.Name => Name;
+    public class Athlant : Fighter
+    {
+        const double CoefficientRegenerationIncrease = 2;
+        const double CoefficientDamageDecrease = 0.5;
 
-        public void Attack(IFighter fighter)
+        public Athlant(string name, int health, int damage, int armor, int regeneration)
         {
-            double berserkerDamage = Damage * CoefficientArmorIncrease;
+            Name = name;
+            Damage = damage * CoefficientDamageDecrease;
+            Health = health;
+            Armor = armor;
+            Regeneration = regeneration * CoefficientRegenerationIncrease;
+        }
+    }
 
-            Console.WriteLine($"{Name} атакует {fighter.Name} и наносит {berserkerDamage} урона.");
+    public class Legionary : Fighter
+    {
+        const double CoefficientAllParameters = 1.3;
 
-            fighter.GiveDamage(berserkerDamage);
+        public Legionary(string name, int health, int damage, int armor, int regeneration)
+        {
+            Name = name;
+            Damage = damage * CoefficientAllParameters;
+            Health = health * CoefficientAllParameters;
+            Armor = armor * CoefficientAllParameters;
+            Regeneration = regeneration * CoefficientAllParameters;
+        }
+    }
+
+    public class Hoplite : Fighter
+    {
+        const double CoefficientHealthIncrease = 1.8;
+        const double CoefficientRegenerationDecrease = 0.4;
+
+        public Hoplite(string name, int health, int damage, int armor, int regeneration)
+        {
+            Name = name;
+            Damage = damage;
+            Health = health * CoefficientHealthIncrease;
+            Armor = armor;
+            Regeneration = regeneration * CoefficientRegenerationDecrease;
         }
     }
 }
