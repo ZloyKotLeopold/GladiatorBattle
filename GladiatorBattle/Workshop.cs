@@ -91,8 +91,6 @@ namespace GladiatorBattle
                 Console.WriteLine($"Вещь нельзя улучшить больше максиматьного уровня: {MaxLevel}.");
             }
 
-
-
             Strength = CalculateParameters(_thing.Strength, _improveByLevel);
 
             Health = CalculateParameters(_thing.Health, _improveByLevel);

@@ -9,11 +9,17 @@ namespace GladiatorBattle
     {
         static void Main()
         {
-            int strength = 0;
-            int health = 0;
-            int energy = 0;
-            int regeneration = 0;
-            int armor = 0;
+            int strengthBers = 0;
+            int healthBers = 0;
+            int energyBers = 0;
+            int regenerationBers = 0;
+            int armorBers = 0;
+
+            int strengthGol = 0;
+            int healthGol = 0;
+            int energyGol = 0;
+            int regenerationGol = 0;
+            int armorGol = 0;
 
             List<Thing> equipmentBerserkList = new List<Thing>
             {
@@ -31,10 +37,50 @@ namespace GladiatorBattle
                 new ShoesBerserk()
             };
 
+            List<Thing> equipmentGoliathList = new List<Thing>
+            {
+                new HelmetGoliath(),
+                new AmuletGoliath(),
+                new ShoulderPadsGoliath(),
+                new CloakGoliath(),
+                new BibGoliath(),
+                new BeltGoliath(),
+                new PantsGoliath(),
+                new BraceletGoliath(),
+                new GlovesGoliath(),
+                new RingGoliath(),
+                new WeaponGoliath(),
+                new ShoesGoliath()
+            };
+
             /*
              * У персонажа будет рюкзак в рюкзаке будут храниться вещи их можно будет надеть это сортировка в рюкзаке
-            *equipmentBerserkList.Sort((a, b) => a.GetType().Name.CompareTo(b.GetType().Name));
+            equipmentBerserkList.Sort((a, b) => a.GetType().Name.CompareTo(b.GetType().Name));
             */
+
+            foreach (Thing equipment in equipmentGoliathList)
+            {
+                Workshop workshop = new Sharpener(equipment);
+                workshop.Sharpen(300, 300, 300, 300, 300);
+                equipment.ImproveThing(workshop);
+
+                workshop = new Blacksmith(equipment);
+                workshop.Forge(13);
+                equipment.ImproveThing(workshop);
+
+                strengthBers += equipment.Strength;
+                healthBers += equipment.Health;
+                energyBers += equipment.Energy;
+                regenerationBers += equipment.Regeneration;
+                armorBers += equipment.Armor;
+
+                Console.WriteLine(
+                    $"{equipment.GetType().Name}: {nameof(equipment.Strength)} = {equipment.Strength}\n" +
+                    $"{equipment.GetType().Name}: {nameof(equipment.Health)} = {equipment.Health}\n" +
+                    $"{equipment.GetType().Name}: {nameof(equipment.Energy)} = {equipment.Energy}\n" +
+                    $"{equipment.GetType().Name}: {nameof(equipment.Regeneration)} = {equipment.Regeneration}\n" +
+                    $"{equipment.GetType().Name}: {nameof(equipment.Armor)} = {equipment.Armor}\n\n");
+            }
 
             foreach (Thing equipment in equipmentBerserkList)
             {
@@ -46,11 +92,11 @@ namespace GladiatorBattle
                 workshop.Forge(13);
                 equipment.ImproveThing(workshop);
 
-                strength += equipment.Strength;
-                health += equipment.Health;
-                energy += equipment.Energy;
-                regeneration += equipment.Regeneration;
-                armor += equipment.Armor;
+                strengthGol += equipment.Strength;
+                healthGol += equipment.Health;
+                energyGol += equipment.Energy;
+                regenerationGol += equipment.Regeneration;
+                armorGol += equipment.Armor;
 
                 Console.WriteLine(
                     $"{equipment.GetType().Name}: {nameof(equipment.Strength)} = {equipment.Strength}\n" +
@@ -58,13 +104,24 @@ namespace GladiatorBattle
                     $"{equipment.GetType().Name}: {nameof(equipment.Energy)} = {equipment.Energy}\n" +
                     $"{equipment.GetType().Name}: {nameof(equipment.Regeneration)} = {equipment.Regeneration}\n" +
                     $"{equipment.GetType().Name}: {nameof(equipment.Armor)} = {equipment.Armor}\n\n");
-
             }
+
+            Console.WriteLine(
+                $"{nameof(strengthBers)}: {strengthBers}\n" +
+                $"{nameof(healthBers)}: {healthBers}\n" +
+                $"{nameof(energyBers)}: {energyBers}\n" +
+                $"{nameof(regenerationBers)}: {regenerationBers}\n" +
+                $"{nameof(armorBers)}: {armorBers}\n\n" +
+                $"{nameof(strengthGol)}: {strengthGol}\n" +
+                $"{nameof(healthGol)}: {healthGol}\n" +
+                $"{nameof(energyGol)}: {energyGol}\n" +
+                $"{nameof(regenerationGol)}: {regenerationGol}\n" +
+                $"{nameof(armorGol)}: {armorGol}\n\n");
 
             Arena roundModeling = new Arena();
 
-            Berserker berserk = new Berserker("Берсерк", health, strength, armor, regeneration);
-            Goliath goliath = new Goliath("Голиаф", health, strength, armor, regeneration);
+            Berserker berserk = new Berserker("Берсерк", healthBers, strengthBers, armorBers, regenerationBers);
+            Goliath goliath = new Goliath("Голиаф", healthGol, strengthGol, armorGol, regenerationGol);
             Athlant athlant = new Athlant("Атлант", 1500, 250, 40, 50);
             Legionary legionary = new Legionary("Легионер", 1500, 250, 40, 50);
             Hoplite hoplite = new Hoplite("Гоплит", 1500, 250, 40, 50);
@@ -95,7 +152,7 @@ namespace GladiatorBattle
                         fighter2.Attack(fighter1);
                 }
 
-                if (fighter1.IsAlive() && fighter1.IsAlive())
+                if (fighter1.IsAlive() && fighter2.IsAlive())
                 {
                     Console.WriteLine("Бойцы храбро срадались но никто не победил");
                 }
@@ -131,7 +188,7 @@ namespace GladiatorBattle
 
             public void RegenirationHealth()
             {
-                Health = Regeneration;
+                Health += Regeneration / 1000;
             }
 
             public void Attack(IFighter fighter)
@@ -145,7 +202,7 @@ namespace GladiatorBattle
 
             public bool IsAlive()
             {
-                return Health >= 0;
+                return Health > 0;
             }
         }
 
@@ -157,8 +214,8 @@ namespace GladiatorBattle
             public Berserker(string name, int health, int damage, int armor, int regeneration)
             {
                 Name = name;
-                Health = health * CoefficientHealthDecrease;
-                Damage = damage * CoefficientDamageIncrease;
+                Health = health;
+                Damage = damage;
                 Armor = armor;
                 Regeneration = regeneration;
             }
@@ -173,9 +230,9 @@ namespace GladiatorBattle
             public Goliath(string name, int health, int damage, int armor, int regeneration)
             {
                 Name = name;
-                Damage = damage * CoefficientDamageDecrease;
-                Health = health * CoefficientHealthIncrease;
-                Armor = armor * CoefficientArmorIncrease;
+                Damage = damage;
+                Health = health;
+                Armor = armor;
                 Regeneration = regeneration;
             }
         }

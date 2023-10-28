@@ -38,7 +38,6 @@ namespace GladiatorBattle
             Health = ConstHealth;
             Energy = ConstRegeneration;
         }
-
     }
 
     public class HelmetGoliath : Thing
@@ -53,7 +52,6 @@ namespace GladiatorBattle
             Regeneration = ConstRegeneration;
             Armor = ConstArmor;
         }
-
     }
 
     public class HelmentGladiator : Thing
@@ -84,7 +82,6 @@ namespace GladiatorBattle
             Energy = ConstEnergy;
             Regeneration = ConstRegeneration;
         }
-
     }
 
     public class AmuletGoliath : Thing
@@ -101,7 +98,6 @@ namespace GladiatorBattle
             Energy = ConstEnergy;
             Armor = ConstArmor;
         }
-
     }
 
     public class AmuletGladiator : Thing
@@ -134,7 +130,6 @@ namespace GladiatorBattle
             Regeneration = ConstRegeneration;
             Armor = ConstArmor;
         }
-
     }
 
     public class ShoulderPadsGoliath : Thing
@@ -151,7 +146,6 @@ namespace GladiatorBattle
             Regeneration = ConstRegeneration;
             Armor = ConstArmor;
         }
-
     }
 
     public class ShoulderPadsGladiator : Thing
@@ -186,7 +180,6 @@ namespace GladiatorBattle
             Regeneration = ConstRegeneration;
             Armor = ConstArmor;
         }
-
     }
 
     public class CloakGoliath : Thing
@@ -205,7 +198,6 @@ namespace GladiatorBattle
             Regeneration = ConstRegeneration;
             Armor = ConstArmor;
         }
-
     }
 
     public class CloakGladiator : Thing
@@ -223,7 +215,6 @@ namespace GladiatorBattle
 
     }
 
-
     public class BibBerserk : Thing
     {
         const int ConstStrength = 48;
@@ -236,7 +227,6 @@ namespace GladiatorBattle
             Energy = ConstEnergy;
             Armor = ConstArmor;
         }
-
     }
 
     public class BibGoliath : Thing
@@ -251,7 +241,6 @@ namespace GladiatorBattle
             Health = ConstHealth;
             Armor = ConstArmor;
         }
-
     }
 
     public class BibGladiator : Thing
@@ -286,7 +275,6 @@ namespace GladiatorBattle
             Regeneration = ConstRegeneration;
             Armor = ConstArmor;
         }
-
     }
 
     public class BeltGoliath : Thing
@@ -305,7 +293,6 @@ namespace GladiatorBattle
             Regeneration = ConstRegeneration;
             Armor = ConstArmor;
         }
-
     }
 
     public class BeltGladiator : Thing
@@ -323,7 +310,6 @@ namespace GladiatorBattle
 
     }
 
-
     public class PantsBerserk : Thing
     {
         const int ConstStrength = 30;
@@ -338,7 +324,6 @@ namespace GladiatorBattle
             Regeneration = ConstRegeneration;
             Armor = ConstArmor;
         }
-
     }
 
     public class PantsGoliath : Thing
@@ -355,8 +340,6 @@ namespace GladiatorBattle
             Regeneration = ConstRegeneration;
             Armor = ConstArmor;
         }
-
-
     }
 
     public class PantsGladiator : Thing
@@ -374,7 +357,6 @@ namespace GladiatorBattle
 
     }
 
-
     public class BraceletBerserk : Thing
     {
         const int ConstHealth = 18;
@@ -389,7 +371,6 @@ namespace GladiatorBattle
             Regeneration = ConstRegeneration;
             Armor = ConstArmor;
         }
-
     }
 
     public class BraceletGoliath : Thing
@@ -406,8 +387,6 @@ namespace GladiatorBattle
             Regeneration = ConstRegeneration;
             Armor = ConstArmor;
         }
-
-
     }
 
     public class BraceletGladiator : Thing
@@ -425,7 +404,6 @@ namespace GladiatorBattle
 
     }
 
-
     public class GlovesBerserk : Thing
     {
         const int ConstStrength = 54;
@@ -440,7 +418,6 @@ namespace GladiatorBattle
             Regeneration = ConstRegeneration;
             Armor = ConstArmor;
         }
-
     }
 
     public class GlovesGoliath : Thing
@@ -457,7 +434,6 @@ namespace GladiatorBattle
             Regeneration = ConstRegeneration;
             Armor = ConstArmor;
         }
-
     }
 
     public class GlovesGladiator : Thing
@@ -475,7 +451,6 @@ namespace GladiatorBattle
 
     }
 
-
     public class RingBerserk : Thing
     {
         const int ConstHealth = 18;
@@ -488,7 +463,6 @@ namespace GladiatorBattle
             Energy = ConstEnergy;
             Regeneration = ConstRegeneration;
         }
-
     }
 
     public class RingGoliath : Thing
@@ -503,7 +477,6 @@ namespace GladiatorBattle
             Energy = ConstEnergy;
             Regeneration = ConstRegeneration;
         }
-
     }
 
     public class RingGladiator : Thing
@@ -521,7 +494,6 @@ namespace GladiatorBattle
 
     }
 
-
     public class WeaponBerserk : Thing
     {
         const int ConstStrength = 102;
@@ -534,7 +506,6 @@ namespace GladiatorBattle
             Health = ConstHealth;
             Energy = ConstEnergy;
         }
-
     }
 
     public class WeaponGoliath : Thing
@@ -548,8 +519,7 @@ namespace GladiatorBattle
             Strength = ConstStrength;
             Health = ConstHealth;
             Energy = ConstEnergy;
-        }
-       
+        } 
     }
 
     public class WeaponGladiator : Thing
@@ -567,7 +537,6 @@ namespace GladiatorBattle
 
     }
 
-
     public class ShoesBerserk : Thing
     {
         const int ConstStrength = 30;
@@ -582,8 +551,6 @@ namespace GladiatorBattle
             Energy = ConstEnergy;
             Armor = ConstArmor;
         }
-
-
     }
 
     public class ShoesGoliath : Thing
@@ -600,8 +567,6 @@ namespace GladiatorBattle
             Energy = ConstEnergy;
             Armor = ConstArmor;
         }
-
-
     }
 
     public class ShoesGladiator : Thing
@@ -618,5 +583,4 @@ namespace GladiatorBattle
     {
 
     }
-
 }
